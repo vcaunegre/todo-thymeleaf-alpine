@@ -1,0 +1,28 @@
+<head th:insert="fragments/head.html"></head>
+
+<body>
+  <div class="container w-50">
+    <h2 class="text-center">Todo list</h2>
+    <form method="post" th:action="@{/add}" th:object="${todo}">
+      <input type="text" id="title" placeholder="Enter the todo" th:field="*{title}">
+      <button class="btn btn-primary" role="button" type="submit">Button</button>
+    </form>
+    <div class="list-group">
+      <div class="card p-2" th:each="listItem : ${myList}" x-data="{checked: false}">
+        <div class=" d-flex flex-row justify-content-between">
+          <div th:text="${listItem.id}"></div>
+          <p x-bind:style="checked && {textDecoration:'line-through'}" th:text="${listItem.title}">
+          </p>
+          <div>
+            <form th:method="delete" th:action="@{'/delete/{id}'(id=${listItem.id})}">
+              <input type="hidden" name="_method" value="delete" />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
